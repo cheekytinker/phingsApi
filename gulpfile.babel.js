@@ -20,7 +20,7 @@ gulp.task('transpileSource', function() {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('api'));
 });
-g
+
 gulp.task('default', ['transpileSource'], () => {
   gulp.watch('src/**/*.js', ['transpileSource']);
 });
