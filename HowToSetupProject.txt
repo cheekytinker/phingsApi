@@ -1,0 +1,68 @@
+Install airbnb lint
+
+	npm install -g install-peerdeps
+	install-peerdeps --dev eslint-config-airbnb
+
+Add .eslintrc file to project root
+
+{
+  "rules": {
+    "no-console" : 0
+  },
+  "extends": "airbnb"
+}
+
+install babel
+
+	npm install --save-dev babel-core babel-preset-es2015
+
+Add .babelrc file
+
+
+{
+  "presets":["es2015"]
+}
+
+Install gulp
+
+	npm install --save-dev gulp gulp-babel gulp-concat gulp-plumber gulp-sourcemaps gulp-watch
+
+Create a gulpfile.babel file in the root
+
+'use strict';
+
+var gulp = require('gulp');
+var watch = require('gulp-watch');
+var sourcemaps = require('gulp-sourcemaps');
+var babel = require('gulp-babel');
+var concat = require('gulp-concat');
+var plumber = require('gulp-plumber');
+
+gulp.task('default', () => {
+  return watch('src/**/*.js', function() {
+    gulp.src('src/**/*.js')
+      .pipe(plumber(function(error){
+        console.log("Error transpiling", error.message)
+        this.emit('end');
+      }))
+      .pipe(sourcemaps.init())
+      .pipe(babel({
+        presets: ['es2015']
+      }))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest('api'));
+  });
+});
+
+Add test packages
+
+    npm install --save-dev mocha chai sinon
+
+
+Add a test script to package.json
+
+"test": "mocha --recursive --watch --require babel-core/register"
+
+
+
+
