@@ -57,6 +57,7 @@ describe('controllers', () => {
             done();
           });
       });
+      it('should retrurn token if the creds are valid');
     });
   });
 });
