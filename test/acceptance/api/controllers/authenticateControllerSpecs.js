@@ -1,7 +1,7 @@
 import should from 'should';
 import request from 'supertest';
 import { describe, it, after } from 'mocha';
-import server from '../../../app';
+import server from '../../../../app';
 
 describe('controllers', () => {
   after('start server', () => {
@@ -41,7 +41,7 @@ describe('controllers', () => {
             done();
           });
       });
-      it('should return a token if creds valid', (done) => {
+      it('should return a 404 if creds not valid', (done) => {
         request(server)
           .post('/authTokens')
           .send({
@@ -50,7 +50,7 @@ describe('controllers', () => {
           })
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(201)
+          .expect(404)
           .end((err, res) => {
             should.not.exist(err);
             console.log(res.body);

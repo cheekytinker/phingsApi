@@ -27,7 +27,7 @@ Install gulp
 
 	npm install --save-dev gulp gulp-babel gulp-concat gulp-plumber gulp-sourcemaps gulp-watch
 
-Create a gulpfile.babel file in the root
+Create a gulp.babel file in the root 
 
 'use strict';
 
@@ -50,19 +50,13 @@ gulp.task('default', () => {
         presets: ['es2015']
       }))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('api'));
+      .pipe(gulp.dest('build'));
   });
 });
 
-Add test packages
-
-    npm install --save-dev mocha chai sinon
 
 
-Add a test script to package.json
-
-"test": "mocha --recursive --watch --require babel-core/register"
-
+Dependency Injection in Restify 
 
 
 

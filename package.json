@@ -8,6 +8,9 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "inversify": "^3.0.0",
+    "inversify-restify-utils": "^3.0.0",
+    "reflect-metadata": "^0.1.9",
     "restify": "^4.0.2",
     "swagger-restify-mw": "^0.1.0"
   },
