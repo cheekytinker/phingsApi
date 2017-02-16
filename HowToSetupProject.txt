@@ -59,4 +59,9 @@ gulp.task('default', () => {
 Dependency Injection in Restify 
 
 
+npm install inversify inversify-restify-utils reflect-metadata --save
+
+npm install inversify-vanillajs-helpers --save
+
+
 

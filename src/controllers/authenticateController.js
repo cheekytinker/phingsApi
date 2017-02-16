@@ -1,4 +1,5 @@
 import AuthenticateService from '../services/authenticateService';
+import UserModel from '../helpers/models';
 
 export class AuthenticateController {
   constructor({ service }) {
@@ -21,7 +22,11 @@ export class AuthenticateController {
     res.json('a token');
   }
 }
-const controller = new AuthenticateController({ service: new AuthenticateService() });
+if (!UserModel) {
+  console.log('No user model');
+}
+
+const controller = new AuthenticateController({ service: new AuthenticateService(new UserModel()) });
 
 export const createToken = function (req, res) {
   return controller.createToken(req, res);

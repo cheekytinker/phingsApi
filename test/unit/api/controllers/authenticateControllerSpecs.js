@@ -31,7 +31,11 @@ describe('unit', () => {
             serviceMock.verify();
           });
           it('should return 404 if user not found', () => {
-            const serviceStub = sinon.stub(new AuthenticateService());
+            const userModel = {
+              find: () => {
+              },
+            };
+            const serviceStub = sinon.stub(new AuthenticateService(userModel));
             const controller = new AuthenticateController({ service: serviceStub });
             serviceStub.findUser.returns(null);
             const req = {
