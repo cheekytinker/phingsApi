@@ -14,7 +14,7 @@ describe('unit', () => {
               findUser: () => {},
             };
             const serviceMock = sinon.mock(service);
-            const controller = new AuthenticateController({ service: serviceMock.object });
+            const controller = new AuthenticateController(serviceMock.object);
 
             serviceMock.expects('findUser').once().withArgs('userName', 'password');
             const req = {
@@ -36,7 +36,7 @@ describe('unit', () => {
               },
             };
             const serviceStub = sinon.stub(new AuthenticateService(userModel));
-            const controller = new AuthenticateController({ service: serviceStub });
+            const controller = new AuthenticateController(serviceStub);
             serviceStub.findUser.returns(null);
             const req = {
               body: {

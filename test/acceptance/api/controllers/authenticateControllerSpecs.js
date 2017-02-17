@@ -43,7 +43,7 @@ describe('acceptance', () => {
                 done();
               });
           });
-          it('should return a 404 if creds not valid', (done) => {
+          it('should return a 404  if creds not valid', (done) => {
             request(server)
               .post('/authTokens')
               .send({
@@ -54,6 +54,7 @@ describe('acceptance', () => {
               .expect('Content-Type', /json/)
               .expect(404)
               .end((err, res) => {
+                console.log(err);
                 should.not.exist(err);
                 console.log(res.body);
                 done();

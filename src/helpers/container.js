@@ -4,17 +4,14 @@ import { helpers } from 'inversify-vanillajs-helpers';
 import { TYPES } from './config';
 import AuthenticateController from '../controllers/authenticateController';
 import AuthenticateService from '../services/authenticateService';
-import UserModel from '../helpers/models';
-
-
-helpers.annotate(UserModel);
-helpers.annotate(AuthenticateController, [TYPES.AuthenticateService]);
-helpers.annotate(AuthenticateService, [TYPES.UserModel]);
-
+import UserModel from './userModel';
 
 const container = new inversify.Container();
-container.bind(TYPES.AuthenticateController).to(AuthenticateController);
-container.bind(TYPES.AuthenticateService).to(AuthenticateService);
-container.bind(TYPES.UserModel).to(UserModel);
+const register = helpers.register(container);
+register(TYPES.UserModel)(UserModel);
+register(TYPES.AuthenticateService, [TYPES.UserModel])(AuthenticateService);
+register(TYPES.AuthenticateController, [TYPES.AuthenticateService])(AuthenticateController);
+
+console.log('Container called');
 
 exports.Container = container;

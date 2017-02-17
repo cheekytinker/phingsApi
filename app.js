@@ -1,4 +1,6 @@
 'use strict';
+import { Container } from './src/helpers/container';
+console.log('App called');
 
 var SwaggerRestify = require('swagger-restify-mw');
 var restify = require('restify');

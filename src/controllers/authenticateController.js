@@ -1,8 +1,5 @@
-import AuthenticateService from '../services/authenticateService';
-import UserModel from '../helpers/models';
-
 export default class AuthenticateController {
-  constructor({ service }) {
+  constructor(service) {
     this.service = service;
   }
   createToken(req, res) {
@@ -23,12 +20,5 @@ export default class AuthenticateController {
   }
 }
 
-const controller = new AuthenticateController({
-  service: new AuthenticateService(
-    new UserModel()),
-});
 
-export const createToken = function (req, res) {
-  return controller.createToken(req, res);
-};
 
