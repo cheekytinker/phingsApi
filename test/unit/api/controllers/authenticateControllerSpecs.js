@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import sinon from 'sinon';
-import { AuthenticateController } from '../../../../src/controllers/authenticateController';
+import AuthenticateController from '../../../../src/controllers/authenticateController';
 import AuthenticateService from '../../../../src/services/authenticateService';
 
 

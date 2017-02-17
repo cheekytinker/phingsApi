@@ -1,9 +1,8 @@
-import Reflect from 'reflect-metadata';
 const TYPES = {
+  UserModel: 'UserModel',
+  AuthenticateController: 'AuthenticateController',
   AuthenticateService: 'AuthenticateService',
 };
 
-exports = {
-  TYPES,
-};
+exports.TYPES = TYPES;
 

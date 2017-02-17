@@ -3,7 +3,7 @@ import request from 'supertest';
 import { describe, it, after } from 'mocha';
 import server from '../../../../app';
 
-describe('accetpance', () => {
+describe('acceptance', () => {
   describe('api', () => {
     describe('controllers', () => {
       after('start server', () => {

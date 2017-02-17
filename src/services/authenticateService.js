@@ -1,6 +1,3 @@
-import { helpers } from 'inversify-vanillajs-helpers';
-import config from '../helpers/config';
-
 export default class AuthenticateService {
   constructor(userModel) {
     this.userModel = userModel;
@@ -10,4 +7,3 @@ export default class AuthenticateService {
   }
 }
 
-helpers.annotate(AuthenticateService);
