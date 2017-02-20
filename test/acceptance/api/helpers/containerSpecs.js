@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import should from 'should';
-import { Container } from '../../../../src/helpers/container';
-import { TYPES } from '../../../../src/helpers/config';
+import { Container } from '../../../../src/api/helpers/container';
+import { TYPES } from '../../../../src/api/helpers/config';
 
 describe('acceptance', () => {
   describe('api', () => {

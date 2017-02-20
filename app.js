@@ -1,5 +1,4 @@
 'use strict';
-import { Container } from './src/helpers/container';
 console.log('App called');
 
 var SwaggerRestify = require('swagger-restify-mw');
@@ -9,8 +8,12 @@ var app = restify.createServer();
 module.exports = app; // for testing
 
 var config = {
-  appRoot: __dirname // required config
+  appRoot: __dirname, // required config
+  //configDir: 'config',
+  //swaggerFile: 'app/api/swagger/swagger.yaml',
 };
+console.log('AppRoot' + config.appRoot);
+console.log('File path' + require('path').dirname(require.main.filename));
 
 SwaggerRestify.create(config, function(err, swaggerRestify) {
   if (err) { throw err; }

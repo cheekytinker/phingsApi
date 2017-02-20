@@ -38,7 +38,7 @@ describe('acceptance', () => {
               .expect(400)
               .end((err, res) => {
                 should.not.exist(err);
-                const {results: {errors: [{message: theMessage}]}} = res.body;
+                const { results: { errors: [{ message: theMessage }] } } = res.body;
                 theMessage.should.match(/.*Missing required property: userName.*/);
                 done();
               });

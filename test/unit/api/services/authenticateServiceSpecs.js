@@ -1,8 +1,8 @@
 import { describe, it, before } from 'mocha';
 import sinon from 'sinon';
 import inversify from 'inversify';
-import AuthenticateService from '../../../../src/services/authenticateService';
-import { TYPES } from '../../../../src/helpers/config';
+import AuthenticateService from '../../../../src/api/services/authenticateService';
+import { TYPES } from '../../../../src/api/helpers/config';
 
 describe('authenticateservice', () => {
   let container = null;

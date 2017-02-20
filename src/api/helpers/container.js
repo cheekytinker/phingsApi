@@ -12,6 +12,4 @@ register(TYPES.UserModel)(UserModel);
 register(TYPES.AuthenticateService, [TYPES.UserModel])(AuthenticateService);
 register(TYPES.AuthenticateController, [TYPES.AuthenticateService])(AuthenticateController);
 
-console.log('Container called');
-
 exports.Container = container;

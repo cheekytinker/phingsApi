@@ -15,10 +15,10 @@ gulp.task('transpileSource', function() {
     }))
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015'],
     }))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('api'));
+    .pipe(gulp.dest('/'));
 });
 
 gulp.task('default', ['transpileSource'], () => {
