@@ -1,8 +1,7 @@
 import { describe, it } from 'mocha';
 import sinon from 'sinon';
 import AuthenticateController from '../../../../src/api/controllers/authenticateController';
-import AuthenticateService from '../../../../src/api/services/authenticateService';
-
+import AuthenticateService from '../../../../src/services/authentication/authenticateService';
 
 describe('unit', () => {
   describe('api', () => {
