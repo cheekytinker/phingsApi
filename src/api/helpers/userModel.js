@@ -1,5 +1,5 @@
 export default class UserModel {
   find() {
-    return null;
+    return {token:'1234'};
   }
 }

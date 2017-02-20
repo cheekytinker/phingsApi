@@ -18,7 +18,7 @@ gulp.task('transpileSource', function() {
       presets: ['es2015'],
     }))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('/'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('default', ['transpileSource'], () => {

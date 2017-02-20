@@ -12,7 +12,7 @@ export default class AuthenticateController {
     const user = this.service.findUser(userName, password);
     if (!user) {
       res.status(404);
-      res.json({ message: 'User not found' })
+      res.json({ message: 'User not found again' })
       return;
     }
     res.status(201);
