@@ -1,6 +1,6 @@
-import { describe, it, before } from 'mocha';
+import { describe, it } from 'mocha';
 import sinon from 'sinon';
-import AuthenticateService from '../../../src/services/authentication/authenticateService';
+import AuthenticateService from '../../../../src/services/authentication/authenticateService';
 
 describe('authenticateservice', () => {
   it('should allow findUser', () => {

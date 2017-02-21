@@ -19,7 +19,7 @@ produces:
   - application/json
 paths:
   /authTokens:
-    x-swagger-router-controller: authenticateFactoryController
+    x-swagger-router-controller: authenticateControllerMethodFactory
     post:
       description: create jwt for use in api calls
       operationId: createToken
