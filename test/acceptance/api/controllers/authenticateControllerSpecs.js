@@ -1,5 +1,6 @@
 import should from 'should';
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { describe, it, after } from 'mocha';
 import server from '../../../../app';
 
@@ -7,7 +8,9 @@ describe('acceptance', () => {
   describe('api', () => {
     describe('controllers', () => {
       after('start server', () => {
+        console.log('closing server and mongoose connection');
         server.close();
+        mongoose.connection.close();
       });
       describe('authenticate', () => {
         describe('POST /authTokens', () => {
@@ -22,7 +25,7 @@ describe('acceptance', () => {
               .expect(400)
               .end((err, res) => {
                 should.not.exist(err);
-                const {results: {errors: [{message: theMessage}]}} = res.body;
+                const { results: { errors: [{ message: theMessage }] } } = res.body;
                 theMessage.should.match(/.*Missing required property: password.*/);
                 done();
               });
