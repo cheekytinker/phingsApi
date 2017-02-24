@@ -31,11 +31,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       });
       (0, _mocha.describe)('authenticate', function () {
         (0, _mocha.describe)('POST /authTokens', function () {
-          (0, _mocha.before)('create test users', function () {
+          (0, _mocha.before)('create test users', function (done) {
             var user = new _user2.default();
             user.firstName = 'Anthony';
             user.userName = 'userName';
             user.password = 'password';
+            user.save(function () {
+              done();
+            });
           });
           (0, _mocha.after)('Remove test users', function (done) {
             _user2.default.remove(function () {

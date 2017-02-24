@@ -13,11 +13,14 @@ describe('acceptance', () => {
       });
       describe('authenticate', () => {
         describe('POST /authTokens', () => {
-          before('create test users', () => {
+          before('create test users', (done) => {
             const user = new User();
             user.firstName = 'Anthony';
             user.userName = 'userName';
             user.password = 'password';
+            user.save(() => {
+              done();
+            });
           });
           after('Remove test users', (done) => {
             User.remove(() => {

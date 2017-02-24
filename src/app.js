@@ -1,6 +1,9 @@
-require('./initialiseExternalServices');
+import './initialiseExternalServices';
+import EntityInitialiser from './services/authentication/entityInitialiser';
 
-console.log('App called');
+console.log('App1 called');
+EntityInitialiser.initialise();
+console.log('after init');
 
 const SwaggerRestify = require('swagger-restify-mw');
 const restify = require('restify');
