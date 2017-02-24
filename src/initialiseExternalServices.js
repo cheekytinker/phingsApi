@@ -4,4 +4,7 @@ const mongoRepository = 'phingsApi';
 const dbConnectionUrl = `mongodb://localhost:27017/${mongoRepository}`;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConnectionUrl);
+if (mongoose.connection.readyState !== 1) {
+  mongoose.connect(dbConnectionUrl);
+}
+

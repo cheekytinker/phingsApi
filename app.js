@@ -1,30 +1,33 @@
-require('./src/initialiseExternalServices');
+'use strict';
+
+require('./initialiseExternalServices');
+
 console.log('App called');
 
-const SwaggerRestify = require('swagger-restify-mw');
-const restify = require('restify');
-const app = restify.createServer();
+var SwaggerRestify = require('swagger-restify-mw');
+var restify = require('restify');
+var app = restify.createServer();
 
 module.exports = app; // for testing
 
-const config = {
-  appRoot: __dirname, // required config
-  //configDir: 'config',
-  //swaggerFile: 'app/api/swagger/swagger.yaml',
-};
+var config = {
+  appRoot: __dirname };
 
-SwaggerRestify.create(config, (err, swaggerRestify) => {
-  if (err) { throw err; }
+SwaggerRestify.create(config, function (err, swaggerRestify) {
+  if (err) {
+    throw err;
+  }
 
   swaggerRestify.register(app);
 
-  const port = process.env.PORT || 10010;
+  var port = process.env.PORT || 10010;
 
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+  app.listen(port, function () {
+    console.log('Listening on port ' + port);
   });
 
   if (swaggerRestify.runner.swagger.paths['/hello']) {
-    console.log(`try this:\ncurl http://127.0.0.1:${port}/hello?name=Scott`);
+    console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
   }
 });
+//# sourceMappingURL=app.js.map
