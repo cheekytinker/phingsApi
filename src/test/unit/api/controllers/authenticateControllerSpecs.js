@@ -11,13 +11,13 @@ describe('unit', () => {
         describe('createToken', () => {
           it('should ask service to get user matching username and password', (done) => {
             const service = {
-              findUser: (userName, password) => {},
+              createJwtForUser: (userName, password) => {},
             };
             const serviceMock = sinon.mock(service);
             const controller = new AuthenticateController(serviceMock.object);
 
             serviceMock
-              .expects('findUser')
+              .expects('createJwtForUser')
               .once()
               .withArgs('userName', 'password')
               .returns(Promise.resolve('123'))
@@ -42,7 +42,7 @@ describe('unit', () => {
             const serviceStub = sinon.stub(new AuthenticateService());
             const controller = new AuthenticateController(serviceStub);
             serviceStub
-              .findUser
+              .createJwtForUser
               .returns(Promise.reject('an error'));
             const req = {
               body: {
@@ -69,7 +69,7 @@ describe('unit', () => {
             const serviceStub = sinon.stub(new AuthenticateService());
             const controller = new AuthenticateController(serviceStub);
             serviceStub
-              .findUser
+              .createJwtForUser
               .returns(Promise.resolve(123));
             const req = {
               body: {

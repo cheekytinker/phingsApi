@@ -10,17 +10,13 @@ describe('integration', () => {
         User
           .remove()
           .then(() => EntityInitialiser.initialise())
-          .then(() => {
-            User
-            .find({ userName: 'master', password: 'test123' })
-            .exec()
-            .then((user) => {
-              expect(user.length).to.equal(1);
-              done();
-            })
-            .catch((err) => {
-              done(err);
-            });
+          .then(() => User.find({ userName: 'master', password: 'test123' }).exec())
+          .then((user) => {
+            expect(user.length).to.equal(1);
+            done();
+          })
+          .catch((err) => {
+            done(err);
           });
       });
     });

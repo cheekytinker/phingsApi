@@ -25,12 +25,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         (0, _mocha.describe)('createToken', function () {
           (0, _mocha.it)('should ask service to get user matching username and password', function (done) {
             var service = {
-              findUser: function findUser(userName, password) {}
+              createJwtForUser: function createJwtForUser(userName, password) {}
             };
             var serviceMock = _sinon2.default.mock(service);
             var controller = new _authenticateController2.default(serviceMock.object);
 
-            serviceMock.expects('findUser').once().withArgs('userName', 'password').returns(Promise.resolve('123'));
+            serviceMock.expects('createJwtForUser').once().withArgs('userName', 'password').returns(Promise.resolve('123'));
             var req = {
               body: {
                 userName: 'userName',
@@ -49,7 +49,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
           (0, _mocha.it)('should return 404 if user not found', function () {
             var serviceStub = _sinon2.default.stub(new _authenticateService2.default());
             var controller = new _authenticateController2.default(serviceStub);
-            serviceStub.findUser.returns(Promise.reject('an error'));
+            serviceStub.createJwtForUser.returns(Promise.reject('an error'));
             var req = {
               body: {
                 userName: 'userName',
@@ -70,7 +70,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
           (0, _mocha.it)('should return 201 if user found', function (done) {
             var serviceStub = _sinon2.default.stub(new _authenticateService2.default());
             var controller = new _authenticateController2.default(serviceStub);
-            serviceStub.findUser.returns(Promise.resolve(123));
+            serviceStub.createJwtForUser.returns(Promise.resolve(123));
             var req = {
               body: {
                 userName: 'userName',

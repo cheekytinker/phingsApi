@@ -76,22 +76,25 @@ describe('acceptance', () => {
                 done();
               });
           });
-          it('should return token if the creds are valid', (done) => {
-            request(server)
-              .post('/authTokens')
-              .send({
-                userName: 'myUserName',
-                password: 'myPassword',
-              })
-              .set('Accept', 'application/json')
-              .expect('Content-Type', /json/)
-              .expect(201)
-              .end((err, res) => {
-                console.log(err);
-                should.not.exist(err);
-                console.log(res.body);
-                done();
-              });
+          describe('if  credentials are valid', () => {
+            it('should return 201', (done) => {
+              request(server)
+                .post('/authTokens')
+                .send({
+                  userName: 'myUserName',
+                  password: 'myPassword',
+                })
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(201)
+                .end((err, res) => {
+                  console.log(err);
+                  should.not.exist(err);
+                  console.log(res.body);
+                  done();
+                });
+            });
+            it('should return a valid jwt token');
           });
         });
       });

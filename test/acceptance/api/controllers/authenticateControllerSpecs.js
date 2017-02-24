@@ -82,16 +82,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
               done();
             });
           });
-          (0, _mocha.it)('should return token if the creds are valid', function (done) {
-            (0, _supertest2.default)(_app2.default).post('/authTokens').send({
-              userName: 'myUserName',
-              password: 'myPassword'
-            }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
-              console.log(err);
-              _should2.default.not.exist(err);
-              console.log(res.body);
-              done();
+          (0, _mocha.describe)('if  credentials are valid', function () {
+            (0, _mocha.it)('should return 201', function (done) {
+              (0, _supertest2.default)(_app2.default).post('/authTokens').send({
+                userName: 'myUserName',
+                password: 'myPassword'
+              }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
+                console.log(err);
+                _should2.default.not.exist(err);
+                console.log(res.body);
+                done();
+              });
             });
+            (0, _mocha.it)('should return a valid jwt token');
           });
         });
       });

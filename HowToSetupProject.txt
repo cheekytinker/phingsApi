@@ -39,8 +39,8 @@ var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 
 gulp.task('default', () => {
-  return watch('src/**/*entityInitialiser.js', function() {
-    gulp.src('src/**/*entityInitialiser.js')
+  return watch('src/**/*.js', function() {
+    gulp.src('src/**/*.js')
       .pipe(plumber(function(error){
         console.log("Error transpiling", error.message)
         this.emit('end');

@@ -2,7 +2,6 @@ import User from './user';
 
 export default class EntityInitialiser {
   static initialise() {
-    console.log('initialise called');
     return User
       .find({ userName: 'master' })
       .exec()
