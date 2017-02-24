@@ -1,4 +1,4 @@
-import { describe, it, after } from 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import User from '../../../../services/authentication/user';
 import '../../../../initialiseExternalServices';
@@ -11,9 +11,6 @@ describe('integration', () => {
         user.userName = 'userName';
         user.password = 'password';
         user.validate((err) => {
-          if (err) {
-            console.log(err);
-          }
           expect(err).to.exist;
           done();
         });
@@ -23,9 +20,6 @@ describe('integration', () => {
         user.firstName = 'Anthony';
         user.password = 'password';
         user.validate((err) => {
-          if (err) {
-            console.log(err);
-          }
           expect(err).to.exist;
           done();
         });
@@ -35,9 +29,6 @@ describe('integration', () => {
         user.firstName = 'Anthony';
         user.userName = 'userName';
         user.validate((err) => {
-          if (err) {
-            console.log(err);
-          }
           expect(err).to.exist;
           done();
         });
@@ -45,7 +36,6 @@ describe('integration', () => {
       it('should allow users to be found', (done) => {
         User.find({}, (err, docs) => {
           expect(docs).to.exist;
-          console.log(docs);
           done();
         });
       });

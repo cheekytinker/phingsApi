@@ -29,6 +29,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
+    "gulp-mocha": "^4.0.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^2.4.0",
     "gulp-watch": "^4.3.11",
@@ -40,6 +41,6 @@
   "scripts": {
     "start": "node app.js",
     "swaggertest": "swagger project test",
-    "test": "mocha --recursive --watch --require babel-core/register"
+    "test": "mocha --recursive"
   }
 }
