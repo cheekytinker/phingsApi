@@ -1,0 +1,23 @@
+machine:
+  node:
+    version: 6.9.4
+  services:
+    - docker
+
+dependencies:
+  override:
+    - npm install
+    - docker info
+    - docker build -t cheekytinker/phingsApi:latest .
+
+deployment:
+  development:
+    branch: /.*-feature$/
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push cheekytinker/phingsApi:latest
+  production:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push cheekytinker/phingsApi:latest

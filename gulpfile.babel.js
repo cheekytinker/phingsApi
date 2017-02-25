@@ -32,6 +32,9 @@ gulp.task('default', ['transpileSource'], () => {
   gulp.watch('src/**/*.js', ['transpileSource']);
 });
 
+gulp.task('transpileandtest', ['transpileSource', 'runtests'], () => {
+});
+
 gulp.task('test', ['transpileSource', 'runtests'], () => {
   gulp.watch('src/**/*.js', ['transpileSource', 'runtests']);
 });

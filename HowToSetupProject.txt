@@ -63,5 +63,14 @@ npm install inversify inversify-restify-utils reflect-metadata --save
 
 npm install inversify-vanillajs-helpers --save
 
+Continuous deployment
+    Add circle.yml
+    Add environment variables
+        $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    Add chat niotifications
+       Slack
+        https://hooks.slack.com/services/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
+Add Dockerfile
+
 
 
