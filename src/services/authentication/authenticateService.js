@@ -5,7 +5,7 @@ const secret = 'secret';
 const options = { expiresIn: 1440 };
 
 function createTokenFormUser(users, reject) {
-  if (users.length != 1) {
+  if (users.length !== 1) {
     return reject('user not found');
   }
   const { userName, firstName, lastName } = users[0];

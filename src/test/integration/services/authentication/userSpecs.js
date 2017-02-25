@@ -1,11 +1,26 @@
-import { describe, it } from 'mocha';
+import { describe, it, before, after } from 'mocha';
 import { expect } from 'chai';
 import User from '../../../../services/authentication/user';
 import '../../../../initialiseExternalServices';
 
+let testUser = null;
 describe('integration', () => {
   describe('authentication', () => {
     describe('user', () => {
+      before('create test user', (done) => {
+        testUser = new User();
+        testUser.firstName = 'Anthony';
+        testUser.userName = 'myUserName';
+        testUser.password = 'myPassword';
+        testUser.save((err) => {
+          done(err);
+        });
+      });
+      after('remove test user', (done) => {
+        User.remove(testUser, () => {
+          done();
+        });
+      });
       it('should require firstName', (done) => {
         const user = new User();
         user.userName = 'userName';
@@ -40,18 +55,10 @@ describe('integration', () => {
         });
       });
       it('should allow find by userName and password', (done) => {
-        const user = new User();
-        user.firstName = 'Anthony';
-        user.userName = 'myUserName';
-        user.password = 'myPassword';
-        user.save((err) => {
-          const userName = 'myUserName';
-          const password = 'myPassword';
-          User.find({userName, password}, (err, foundUser) => {
-            expect(foundUser).to.exist;
-            done();
-          });
-
+        const {userName, password} = testUser;
+        User.find({userName, password}, (err, foundUser) => {
+          expect(foundUser).to.exist;
+          done();
         });
       });
     });

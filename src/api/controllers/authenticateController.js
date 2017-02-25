@@ -14,7 +14,7 @@ export default class AuthenticateController {
       })
       .catch((err) => {
         res.status(404);
-        res.json({ message: `User not found ${err}` });
+        res.json({ message: `${err}` });
       });
   }
 }

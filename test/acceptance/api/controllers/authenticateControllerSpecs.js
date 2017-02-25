@@ -12,6 +12,12 @@ var _supertest2 = _interopRequireDefault(_supertest);
 
 var _mocha = require('mocha');
 
+var _chai = require('chai');
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _app = require('../../../../app');
 
 var _app2 = _interopRequireDefault(_app);
@@ -22,6 +28,7 @@ var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var user = null;
 (0, _mocha.describe)('acceptance', function () {
   (0, _mocha.describe)('api', function () {
     (0, _mocha.describe)('controllers', function () {
@@ -32,16 +39,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       (0, _mocha.describe)('authenticate', function () {
         (0, _mocha.describe)('POST /authTokens', function () {
           (0, _mocha.before)('create test users', function (done) {
-            var user = new _user2.default();
+            user = new _user2.default();
             user.firstName = 'Anthony';
-            user.userName = 'userName';
-            user.password = 'password';
+            user.userName = 'userName456';
+            user.password = 'password456';
             user.save(function () {
               done();
             });
           });
           (0, _mocha.after)('Remove test users', function (done) {
-            _user2.default.remove(function () {
+            _user2.default.findOneAndRemove(user, function () {
               done();
             });
           });
@@ -76,25 +83,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
               userName: 'invalidmyUserName',
               password: 'myPassword'
             }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(404).end(function (err, res) {
-              console.log(err);
               _should2.default.not.exist(err);
               console.log(res.body);
-              done();
+              done(err);
             });
           });
           (0, _mocha.describe)('if  credentials are valid', function () {
             (0, _mocha.it)('should return 201', function (done) {
               (0, _supertest2.default)(_app2.default).post('/authTokens').send({
-                userName: 'myUserName',
-                password: 'myPassword'
+                userName: 'userName456',
+                password: 'password456'
               }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
-                console.log(err);
                 _should2.default.not.exist(err);
-                console.log(res.body);
-                done();
+                done(err);
               });
             });
-            (0, _mocha.it)('should return a valid jwt token');
+            (0, _mocha.it)('should return a valid jwt token', function (done) {
+              (0, _supertest2.default)(_app2.default).post('/authTokens').send({
+                userName: 'userName456',
+                password: 'password456'
+              }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
+                _jsonwebtoken2.default.verify(res.body, 'secret', function (decodeErr, decoded) {
+                  if (decodeErr) {
+                    done(decodeErr);
+                    return;
+                  }
+                  (0, _chai.expect)(decoded).to.exist;
+                  done();
+                });
+              });
+            });
           });
         });
       });

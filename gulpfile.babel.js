@@ -8,9 +8,9 @@ var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var mocha = require('gulp-mocha');
 
-gulp.task('transpileSource', function() {
+gulp.task('transpileSource', () => {
   gulp.src('src/**/*.js')
-    .pipe(plumber(function(error){
+    .pipe(plumber(function (error){
       console.log('Error transpiling', error.message)
       this.emit('end');
     }))
@@ -22,7 +22,7 @@ gulp.task('transpileSource', function() {
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('runtests', function() {
+gulp.task('runtests', () => {
   return gulp.src(['test/**/*.js'])
     .pipe(mocha({
     }));

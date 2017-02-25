@@ -1,9 +1,13 @@
 import should from 'should';
 import request from 'supertest';
 import { describe, it, after, before } from 'mocha';
+import { expect } from 'chai';
+import jwt from 'jsonwebtoken';
 import server from '../../../../app';
 import User from '../../../../services/authentication/user';
 
+
+let user = null;
 describe('acceptance', () => {
   describe('api', () => {
     describe('controllers', () => {
@@ -14,16 +18,16 @@ describe('acceptance', () => {
       describe('authenticate', () => {
         describe('POST /authTokens', () => {
           before('create test users', (done) => {
-            const user = new User();
+            user = new User();
             user.firstName = 'Anthony';
-            user.userName = 'userName';
-            user.password = 'password';
+            user.userName = 'userName456';
+            user.password = 'password456';
             user.save(() => {
               done();
             });
           });
           after('Remove test users', (done) => {
-            User.remove(() => {
+            User.findOneAndRemove(user, () => {
               done();
             });
           });
@@ -70,10 +74,9 @@ describe('acceptance', () => {
               .expect('Content-Type', /json/)
               .expect(404)
               .end((err, res) => {
-                console.log(err);
                 should.not.exist(err);
                 console.log(res.body);
-                done();
+                done(err);
               });
           });
           describe('if  credentials are valid', () => {
@@ -81,20 +84,38 @@ describe('acceptance', () => {
               request(server)
                 .post('/authTokens')
                 .send({
-                  userName: 'myUserName',
-                  password: 'myPassword',
+                  userName: 'userName456',
+                  password: 'password456',
                 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(201)
                 .end((err, res) => {
-                  console.log(err);
                   should.not.exist(err);
-                  console.log(res.body);
-                  done();
+                  done(err);
                 });
             });
-            it('should return a valid jwt token');
+            it('should return a valid jwt token', (done) => {
+              request(server)
+                .post('/authTokens')
+                .send({
+                  userName: 'userName456',
+                  password: 'password456',
+                })
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(201)
+                .end((err, res) => {
+                  jwt.verify(res.body, 'secret', (decodeErr, decoded) => {
+                    if (decodeErr) {
+                      done(decodeErr);
+                      return;
+                    }
+                    expect(decoded).to.exist;
+                    done();
+                  });
+                });
+            });
           });
         });
       });
