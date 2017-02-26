@@ -10,7 +10,7 @@ COPY package.json /usr/src/app/
 COPY . /usr/src/app
 
 RUN npm install
-RUN npm build
+# RUN npm run build
 
 
 

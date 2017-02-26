@@ -1,5 +1,7 @@
 api:
   autoredeploy: true
+  environment:
+    - PHINGSAPI_DB_HOST=db
   image: 'cheekytinker/phingsapi:latest'
   links:
     - db
@@ -8,22 +10,21 @@ api:
   ports:
     - '10010:10010'
 db:
-  image: mongo
+  command: '--storageEngine wiredTiger'
+  image: 'mongo:latest'
   ports:
-    - "27017:27017"
-  command: --storageEngine wiredTiger
+    - '27017:27017'
   volumes:
-    - mongovolume:/data/mongo
+    - /data/mongo
 messaging:
-  image: rabbitmq:3-management
+  image: 'rabbitmq:3-management'
   ports:
-    - "15672:15672"
-    - "5672:5672"
+    - '5672:5672'
+    - '15672:15672'
 search:
-  image: elasticsearch
-  ports:
-    - "9200:9200"
-    - "9300:9300"
   environment:
-    ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-
+    - ES_JAVA_OPTS=-Xms128m -Xmx128m
+  image: 'elasticsearch:latest'
+  ports:
+    - '9200:9200'
+    - '9300:9300'
