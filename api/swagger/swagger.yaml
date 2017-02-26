@@ -18,6 +18,27 @@ consumes:
 produces:
   - application/json
 paths:
+  /accounts:
+    x-swagger-router-controller: accountControllerMethodFactory
+    post:
+      description: create an account
+      operationId: createAccount
+      parameters:
+        - name: account
+          in: body
+          description: basic account information
+          required: true
+          schema:
+            $ref: "#/definitions/CreateAccountRequest"
+      responses:
+        "201":
+          description: success
+          schema:
+            $ref: "#/definitions/CreateAccountResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"       
   /authTokens:
     x-swagger-router-controller: authenticateControllerMethodFactory
     post:
@@ -29,12 +50,12 @@ paths:
           description: the credentials
           required: true
           schema:
-            $ref: "#/definitions/CredentialsRequest"
+            $ref: "#/definitions/CreateTokenRequest"
       responses:
         "201":
           description: Success
           schema:
-            $ref: "#/definitions/TokenResponse"
+            $ref: "#/definitions/CreateTokenResponse"
         default:
           description: Error
           schema:
@@ -43,7 +64,36 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  CredentialsRequest:
+  CreateAccountRequest:
+    properties:
+      name:
+        type: string
+      primaryContact:
+        $ref: "#/definitions/CreateUserRequest"
+    required:
+      - name
+      - primaryContact
+  CreateUserRequest:
+    properties:
+      key:
+        type: string
+      firstName:
+        type: string
+      lastName: 
+        type: string
+      userName: 
+        type: string  
+      email: 
+        type: string
+        format: email
+    required:
+      - email
+      - userName
+  CreateAccountResponse:
+    properties:
+      key:
+        type: string
+  CreateTokenRequest:
     properties:
       userName:
         type: string
@@ -52,7 +102,7 @@ definitions:
     required:
       - password
       - userName
-  TokenResponse:
+  CreateTokenResponse:
     required:
        - token
     properties:
