@@ -20,7 +20,7 @@ const config = {
 };
 
 function triggerApiTests() {
-  const shouldRunTests = process.env.RUN_API_TESTS === true;
+  const shouldRunTests = process.env.RUN_API_TESTS === 'true';
   const circleToken = process.env.CIRCLE_TOKEN || '';
   if (!shouldRunTests) {
     console.log('skipping requesting api tests');
