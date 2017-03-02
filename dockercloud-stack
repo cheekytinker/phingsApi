@@ -2,6 +2,8 @@ api:
   autoredeploy: true
   environment:
     - PHINGSAPI_DB_HOST=db
+    - RUN_API_TESTS=true
+    - CIRCLE_TOKEN=
   image: 'cheekytinker/phingsapi:latest'
   links:
     - db
