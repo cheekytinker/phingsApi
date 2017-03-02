@@ -23,7 +23,6 @@ test:
     - mv coverage $CIRCLE_ARTIFACTS/coverage-report
     - mkdir -p $CIRCLE_TEST_REPORTS/junit
     - mv test-results.xml $CIRCLE_TEST_REPORTS/junit
-    - curl -X POST https://circleci.com/api/v1.1/project/github/cheekytinker/phings-api-tests/tree/master?circle-token=$CIRCLE_API_TOKEN
     - docker info
     - docker build -t cheekytinker/phingsapi:latest .
 deployment:
