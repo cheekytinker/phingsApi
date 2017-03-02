@@ -17,6 +17,8 @@ dependencies:
 test:
   override:
     - npm run cover
+      environment:
+        MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
   post:
     - mkdir -p $CIRCLE_ARTIFACTS/coverage-report
     - mv coverage $CIRCLE_ARTIFACTS/coverage-report
