@@ -1,4 +1,5 @@
-import http from 'http';
+import https from 'https';
+import process from 'process';
 import './initialiseExternalServices';
 import EntityInitialiser from './services/authentication/entityInitialiser';
 
@@ -20,23 +21,26 @@ const config = {
 };
 
 function triggerApiTests() {
+  console.log(`${process.env.RUN_API_TESTS} and ${process.env.CIRCLE_TOKEN}`)
   const shouldRunTests = process.env.RUN_API_TESTS === 'true';
   const circleToken = process.env.CIRCLE_TOKEN || '';
   if (!shouldRunTests) {
     console.log('skipping requesting api tests');
     return;
   }
-  var options = {
-    host: 'https://circleci.com',
-    port: 80,
+  const options = {
+    host: 'circleci.com',
     path: `/api/v1.1/project/github/cheekytinker/phings-api-tests/tree/master?circle-token=${circleToken}`,
     method: 'POST',
   };
-  http
+  const request = https
     .request(options, () => {
       console.log('triggering api tests');
-    })
-    .end();
+    });
+  request.on('error', (err) => {
+    console.log(err);
+  });
+  request.end();
 }
 
 SwaggerRestify.create(config, (err, swaggerRestify) => {

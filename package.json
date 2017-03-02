@@ -22,6 +22,7 @@
     "babel-core": "^6.22.1",
     "babel-preset-es2015": "^6.22.0",
     "chai": "^3.5.0",
+    "cross-env": "^3.1.4",
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -47,6 +48,7 @@
   },
   "scripts": {
     "start": "node app.js",
+    "start2": "cross-env RUN_API_TESTS=true CIRCLE_TOKEN=stick token here node app.js",
     "swaggertest": "swagger project test",
     "test": "gulp transpileandtest",
     "build": "gulp transpileSource",
