@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 let model = null;
+
 if (mongoose.models.User != null && mongoose.modelSchemas.User != null) {
   model = mongoose.models.User;
 } else {

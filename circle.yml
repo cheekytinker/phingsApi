@@ -13,6 +13,7 @@ dependencies:
   override:
     - npm install
     - npm run build
+    - npm run cover
     - docker info
     - docker build -t cheekytinker/phingsapi:latest .
 

@@ -6,7 +6,6 @@ api:
   links:
     - db
     - messaging
-    - search
   ports:
     - '10010:10010'
 db:
@@ -21,10 +20,4 @@ messaging:
   ports:
     - '5672:5672'
     - '15672:15672'
-search:
-  environment:
-    - ES_JAVA_OPTS=-Xms128m -Xmx128m
-  image: 'elasticsearch:latest'
-  ports:
-    - '9200:9200'
-    - '9300:9300'
+
