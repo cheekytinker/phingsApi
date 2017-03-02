@@ -13,10 +13,15 @@ dependencies:
   override:
     - npm install
     - npm run build
+
+test:
+  override:
     - npm run cover
+  post:
+    - mkdir -p $CIRCLE_ARTIFACTS/coverage-report
+    - mv coverage $CIRCLE_ARTIFACTS/coverage-report
     - docker info
     - docker build -t cheekytinker/phingsapi:latest .
-
 deployment:
   development:
     branch: /.*-feature$/
