@@ -5,7 +5,7 @@ describe('unit', () =>{
   describe('api', ()=> {
     describe('controllerFactories', () => {
       it('should run createToken on controller', () => {
-        createToken({ body: '' }, {});
+        createToken({ body: '' }, { status: () => {}, json: () => {} });
       });
     });
   });

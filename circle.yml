@@ -22,6 +22,8 @@ test:
   post:
     - mkdir -p $CIRCLE_ARTIFACTS/coverage-report
     - mv coverage $CIRCLE_ARTIFACTS/coverage-report
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - mv test-results.xml $CIRCLE_TEST_REPORTS/junit
     - docker info
     - docker build -t cheekytinker/phingsapi:latest .
 deployment:
