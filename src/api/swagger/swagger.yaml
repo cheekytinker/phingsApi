@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: phings API
+  title: phings-api
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -21,7 +21,7 @@ paths:
   /accounts:
     x-swagger-router-controller: accountControllerMethodFactory
     post:
-      description: create an account
+      description: create an account for use in the api
       operationId: createAccount
       parameters:
         - name: account

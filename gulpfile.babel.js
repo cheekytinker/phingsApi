@@ -14,7 +14,12 @@ var runSequence = require('run-sequence');
 var testFiles = 'test/**/*.js';
 var srcFiles = 'src/**/*.js';
 
-gulp.task('transpileSource', () => {
+gulp.task('copyswaggertosrc', ()=> {
+  gulp.src('api/swagger/*')
+  .pipe(gulp.dest('src/api/swagger/'));
+});
+
+gulp.task('transpileSource', ['copyswaggertosrc'], () => {
   gulp.src(srcFiles)
     .pipe(plumber(function (error){
       console.log('Error transpiling', error.message)
