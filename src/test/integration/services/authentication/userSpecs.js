@@ -11,7 +11,8 @@ describe('integration', () => {
         testUser = new User();
         testUser.firstName = 'Anthony';
         testUser.userName = 'myUserName';
-        testUser.password = 'myPassword';
+        testUser.passwordHash = 'passwordHash';
+        testUser.passwordSalt = 'passwordSalt';
         testUser.save((err) => {
           done(err);
         });
@@ -26,25 +27,35 @@ describe('integration', () => {
         user.userName = 'userName';
         user.password = 'password';
         user.validate((err) => {
-          expect(err).to.exist;
+          expect(err.errors.firstName.kind).to.equal('required');
           done();
         });
       });
       it('should require userName', (done) => {
         const user = new User();
         user.firstName = 'Anthony';
-        user.password = 'password';
+        user.passwordHash = 'password';
         user.validate((err) => {
-          expect(err).to.exist;
+          expect(err.errors.userName.kind).to.equal('required');
           done();
         });
       });
-      it('should require password', (done) => {
+      it('should require passwordHash', (done) => {
         const user = new User();
         user.firstName = 'Anthony';
         user.userName = 'userName';
         user.validate((err) => {
-          expect(err).to.exist;
+          expect(err.errors.passwordHash.kind).to.equal('required');
+          done();
+        });
+      });
+      it('should require passwordSalt', (done) => {
+        const user = new User();
+        user.firstName = 'Anthony';
+        user.userName = 'userName';
+        user.passwordHash = 'kjhdkfh';
+        user.validate((err) => {
+          expect(err.errors.passwordSalt.kind).to.equal('required');
           done();
         });
       });
@@ -54,9 +65,9 @@ describe('integration', () => {
           done();
         });
       });
-      it('should allow find by userName and password', (done) => {
+      it('should allow find by userName', (done) => {
         const {userName, password} = testUser;
-        User.find({userName, password}, (err, foundUser) => {
+        User.find({userName}, (err, foundUser) => {
           expect(foundUser).to.exist;
           done();
         });

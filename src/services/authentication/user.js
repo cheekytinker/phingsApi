@@ -15,7 +15,11 @@ if (mongoose.models.User != null && mongoose.modelSchemas.User != null) {
       type: String,
       required: true,
     },
-    password: {
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    passwordSalt: {
       type: String,
       required: true,
     },

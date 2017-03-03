@@ -52,6 +52,7 @@
     "swaggertest": "swagger project test",
     "test": "gulp transpileandtest",
     "build": "gulp transpileSource",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter mocha-junit-reporter --compilers js:babel-core/register --recursive src/test/**/*Specs.js"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter mocha-junit-reporter --compilers js:babel-core/register --recursive src/test/**/*Specs.js",
+    "testwatch": "gulp test"
   }
 }

@@ -81,4 +81,4 @@ var testTokenUser = {
     });
   });
 });
-//# sourceMappingURL=authenticateServiceSpecs.js.map
+//# sourceMappingURL=when-creating-a-json-web-token.js.map

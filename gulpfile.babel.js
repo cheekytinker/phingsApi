@@ -38,7 +38,7 @@ gulp.task('runtests', () => {
     .pipe(mocha());
 });
 
-gulp.task('default', ['transpileSource'], () => {
+gulp.task('watch', ['transpileSource'], () => {
   gulp.watch(srcFiles, ['transpileSource']);
 });
 
