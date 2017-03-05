@@ -11,7 +11,8 @@ export default class EntityInitialiser {
           master.firstName = 'master';
           master.lastName = 'user';
           master.userName = 'master';
-          master.password = 'test123';
+          master.passwordHash = 'test123';
+          master.passwordSalt = 'test123';
           return master
             .save();
         }

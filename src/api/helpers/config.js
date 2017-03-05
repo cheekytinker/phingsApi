@@ -1,5 +1,5 @@
 const TYPES = {
-  UserModel: 'UserModel',
+  PasswordVerifier: 'PasswordVerifier',
   AuthenticateController: 'AuthenticateController',
   AuthenticateService: 'AuthenticateService',
 };

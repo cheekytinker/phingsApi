@@ -38,6 +38,15 @@ gulp.task('runtests', () => {
     .pipe(mocha());
 });
 
+gulp.task('runtestshandleerror', () => {
+  return gulp.src([testFiles])
+    .pipe(plumber(function (error){
+      console.log('Error running tests', error.message)
+      this.emit('end');
+    }))
+    .pipe(mocha());
+});
+
 gulp.task('watch', ['transpileSource'], () => {
   gulp.watch(srcFiles, ['transpileSource']);
 });
@@ -46,6 +55,10 @@ gulp.task('transpileandtest', (callback) => {
   runSequence('transpileSource', 'runtests', callback);
 });
 
-gulp.task('test', ['transpileandtest'], () => {
-  gulp.watch(srcFiles, ['transpileandtest']);
+gulp.task('transpileandtesthandleerrors', (callback) => {
+  runSequence('transpileSource', 'runtestshandleerror', callback);
+});
+
+gulp.task('test', ['transpileandtesthandleerrors'], () => {
+  gulp.watch(srcFiles, ['transpileandtesthandleerrors']);
 });
