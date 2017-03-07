@@ -3,11 +3,14 @@ import request from 'supertest';
 import { describe, it, after, before } from 'mocha';
 import { expect } from 'chai';
 import jwt from 'jsonwebtoken';
+import shortid from 'shortid';
 import server from '../../../../app';
 import User from '../../../../services/authentication/user';
 
 
 let user = null;
+let uniqueUserName = shortid.generate();
+
 describe('acceptance', () => {
   describe('api', () => {
     describe('controllers', () => {
@@ -20,9 +23,13 @@ describe('acceptance', () => {
           before('create test users', (done) => {
             user = new User();
             user.firstName = 'Anthony';
-            user.userName = 'userName456';
-            user.password = 'password456';
-            user.save(() => {
+            user.userName = uniqueUserName;
+            user.passwordHash = 'hash';
+            user.passwordSalt = 'salt';
+            user.save((err) => {
+              if(err) {
+               console.log(err);
+              }
               done();
             });
           });
@@ -84,7 +91,7 @@ describe('acceptance', () => {
               request(server)
                 .post('/authTokens')
                 .send({
-                  userName: 'userName456',
+                  userName: uniqueUserName,
                   password: 'password456',
                 })
                 .set('Accept', 'application/json')
@@ -99,7 +106,7 @@ describe('acceptance', () => {
               request(server)
                 .post('/authTokens')
                 .send({
-                  userName: 'userName456',
+                  userName: uniqueUserName,
                   password: 'password456',
                 })
                 .set('Accept', 'application/json')

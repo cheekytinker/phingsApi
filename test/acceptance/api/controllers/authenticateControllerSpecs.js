@@ -18,6 +18,10 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
+var _shortid = require('shortid');
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
 var _app = require('../../../../app');
 
 var _app2 = _interopRequireDefault(_app);
@@ -29,6 +33,8 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var user = null;
+var uniqueUserName = _shortid2.default.generate();
+
 (0, _mocha.describe)('acceptance', function () {
   (0, _mocha.describe)('api', function () {
     (0, _mocha.describe)('controllers', function () {
@@ -41,9 +47,13 @@ var user = null;
           (0, _mocha.before)('create test users', function (done) {
             user = new _user2.default();
             user.firstName = 'Anthony';
-            user.userName = 'userName456';
-            user.password = 'password456';
-            user.save(function () {
+            user.userName = uniqueUserName;
+            user.passwordHash = 'hash';
+            user.passwordSalt = 'salt';
+            user.save(function (err) {
+              if (err) {
+                console.log(err);
+              }
               done();
             });
           });
@@ -91,7 +101,7 @@ var user = null;
           (0, _mocha.describe)('if  credentials are valid', function () {
             (0, _mocha.it)('should return 201', function (done) {
               (0, _supertest2.default)(_app2.default).post('/authTokens').send({
-                userName: 'userName456',
+                userName: uniqueUserName,
                 password: 'password456'
               }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
                 _should2.default.not.exist(err);
@@ -100,7 +110,7 @@ var user = null;
             });
             (0, _mocha.it)('should return a valid jwt token', function (done) {
               (0, _supertest2.default)(_app2.default).post('/authTokens').send({
-                userName: 'userName456',
+                userName: uniqueUserName,
                 password: 'password456'
               }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
                 _jsonwebtoken2.default.verify(res.body, 'secret', function (decodeErr, decoded) {

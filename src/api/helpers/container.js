@@ -9,7 +9,7 @@ import PasswordVerifier from '../../services/authentication/passwordVerifier';
 const container = new inversify.Container();
 const register = helpers.register(container);
 register(TYPES.PasswordVerifier)(PasswordVerifier);
-register(TYPES.AuthenticateService)(AuthenticateService);
+register(TYPES.AuthenticateService, [TYPES.PasswordVerifier])(AuthenticateService);
 register(TYPES.AuthenticateController, [TYPES.AuthenticateService])(AuthenticateController);
 
 exports.Container = container;

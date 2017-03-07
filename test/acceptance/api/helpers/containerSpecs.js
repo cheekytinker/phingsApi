@@ -16,8 +16,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   (0, _mocha.describe)('api', function () {
     (0, _mocha.describe)('helpers', function () {
       (0, _mocha.describe)('container', function () {
-        (0, _mocha.describe)('should be able to resolve all dependencies', function () {
-          (0, _mocha.it)('should fail', function () {
+        (0, _mocha.describe)('when resolving the controller dependencies', function () {
+          (0, _mocha.it)('should resolve container and dependencies', function () {
             var controller = _container.Container.get(_config.TYPES.AuthenticateController);
             _should2.default.exist(controller);
           });

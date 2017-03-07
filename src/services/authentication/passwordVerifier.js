@@ -1,5 +1,5 @@
 export default class PasswordVerifier {
-  static verify(password, passwordHash, passwordSalt) {
-    return true;
+  verify(password, passwordHash, passwordSalt) {
+    return Promise.resolve(true);
   }
 }

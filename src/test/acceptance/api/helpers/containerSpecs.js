@@ -7,8 +7,8 @@ describe('acceptance', () => {
   describe('api', () => {
     describe('helpers', () => {
       describe('container', () => {
-        describe('should be able to resolve all dependencies', () => {
-          it('should fail', () => {
+        describe('when resolving the controller dependencies', () => {
+          it('should resolve container and dependencies', () => {
             const controller = Container.get(TYPES.AuthenticateController);
             should.exist(controller);
           });
