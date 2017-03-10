@@ -82,13 +82,16 @@ definitions:
       lastName: 
         type: string
       userName: 
-        type: string  
+        type: string 
+      password:
+        type: string
       email: 
         type: string
         format: email
     required:
       - email
       - userName
+      - password
   CreateAccountResponse:
     properties:
       key:
