@@ -9,7 +9,7 @@ import User from '../../../../services/authentication/user';
 
 
 let user = null;
-let uniqueUserName = shortid.generate();
+const uniqueUserName = shortid.generate();
 
 describe('acceptance', () => {
   describe('api', () => {
@@ -24,7 +24,7 @@ describe('acceptance', () => {
             user = new User();
             user.firstName = 'Anthony';
             user.userName = uniqueUserName;
-            user.passwordHash = 'hash';
+            user.passwordHash = 'e9af9689e7b408bf2d9e5540c8a0926889061061e28c0bdcc96e0f1a27fc9d19a426debb0a27c2057156326a911a3d05a2cff9e1cf6250768d15a0e23413e168';
             user.passwordSalt = 'salt';
             user.save((err) => {
               if(err) {
@@ -92,7 +92,7 @@ describe('acceptance', () => {
                 .post('/authTokens')
                 .send({
                   userName: uniqueUserName,
-                  password: 'password456',
+                  password: 'test123',
                 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
@@ -107,7 +107,7 @@ describe('acceptance', () => {
                 .post('/authTokens')
                 .send({
                   userName: uniqueUserName,
-                  password: 'password456',
+                  password: 'test123',
                 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)

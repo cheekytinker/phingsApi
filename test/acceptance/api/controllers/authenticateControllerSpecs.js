@@ -48,7 +48,7 @@ var uniqueUserName = _shortid2.default.generate();
             user = new _user2.default();
             user.firstName = 'Anthony';
             user.userName = uniqueUserName;
-            user.passwordHash = 'hash';
+            user.passwordHash = 'e9af9689e7b408bf2d9e5540c8a0926889061061e28c0bdcc96e0f1a27fc9d19a426debb0a27c2057156326a911a3d05a2cff9e1cf6250768d15a0e23413e168';
             user.passwordSalt = 'salt';
             user.save(function (err) {
               if (err) {
@@ -102,7 +102,7 @@ var uniqueUserName = _shortid2.default.generate();
             (0, _mocha.it)('should return 201', function (done) {
               (0, _supertest2.default)(_app2.default).post('/authTokens').send({
                 userName: uniqueUserName,
-                password: 'password456'
+                password: 'test123'
               }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
                 _should2.default.not.exist(err);
                 done(err);
@@ -111,7 +111,7 @@ var uniqueUserName = _shortid2.default.generate();
             (0, _mocha.it)('should return a valid jwt token', function (done) {
               (0, _supertest2.default)(_app2.default).post('/authTokens').send({
                 userName: uniqueUserName,
-                password: 'password456'
+                password: 'test123'
               }).set('Accept', 'application/json').expect('Content-Type', /json/).expect(201).end(function (err, res) {
                 _jsonwebtoken2.default.verify(res.body, 'secret', function (decodeErr, decoded) {
                   if (decodeErr) {

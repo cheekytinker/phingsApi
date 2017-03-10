@@ -58,7 +58,6 @@ describe('authenticateservice', () => {
       mockPasswordVerifier.expects('verify')
         .once()
         .withArgs(
-            testUser.userName,
             password,
             testUser.passwordHash,
             testUser.passwordSalt,
