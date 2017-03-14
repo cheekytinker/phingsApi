@@ -9,6 +9,9 @@ function sha512(password, salt) {
 };
 
 export default class PasswordVerifier {
+  static createHash(password, salt) {
+    return sha512(password, salt);
+  }
   verify(password, passwordHash, passwordSalt) {
     console.log(`password:${password}|passwordHash:${passwordHash}|passwordSalt:${passwordSalt}`);
     return new Promise((resolve, reject) => {

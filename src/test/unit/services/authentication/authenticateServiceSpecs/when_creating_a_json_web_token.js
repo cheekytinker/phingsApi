@@ -1,5 +1,6 @@
 import { describe, it, before } from 'mocha';
 import sinon from 'sinon';
+import crypto from 'crypto';
 import { expect } from 'chai';
 import jwt from 'jsonwebtoken';
 import AuthenticateService from '../../../../../services/authentication/authenticateService';
@@ -7,13 +8,19 @@ import * as user from '../../../../../services/authentication/user';
 
 let mockUserModel = null;
 let mockPasswordVerifier = null;
+const saltLength = 64;
+const salt = crypto
+  .randomBytes(Math.ceil(saltLength/2))
+  .toString('hex')
+  .slice(0, saltLength);
+
 const secret = 'secret';
 const testUser = {
   userName: 'anthony',
   firstName: 'Anthony',
   lastName: 'Hollingsworth',
   passwordHash: 'hash',
-  passwordSalt: 'salt',
+  passwordSalt: salt,
 };
 const testTokenUser = {
   userName: 'anthony',

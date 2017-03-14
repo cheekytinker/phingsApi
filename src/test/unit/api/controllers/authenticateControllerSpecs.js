@@ -31,12 +31,11 @@ describe('unit', () => {
               status: () => {},
               json: () => {},
             };
-            controller.createToken(req, res)
+            controller.createToken(req, res, () => {})
               .then(() => {
                 serviceMock.verify();
                 done();
               });
-
           });
           it('should return 404 if user not found', () => {
             const serviceStub = sinon.stub(new AuthenticateService());
@@ -56,7 +55,7 @@ describe('unit', () => {
             };
             const resMock = sinon.mock(res);
             resMock.expects('status').once().withArgs(404);
-            controller.createToken(req, resMock.object)
+            controller.createToken(req, resMock.object, () => {})
               .then(() => {
 
               })
@@ -79,19 +78,14 @@ describe('unit', () => {
             };
             let retCode = 0
             const res = {
-              status: (code) => { retCode = code },
+              status: (code) => { retCode = code; },
               json: () => {},
             };
-            //const resMock = sinon.mock(res);
-            //resMock.expects('status').once().withArgs(201);
-            controller.createToken(req, res)
+            controller.createToken(req, res, () => {})
               .then(() => {
                 expect(retCode).to.equal(201);
                 done();
               });
-
-            //resMock.verify();
-
           });
         });
       });

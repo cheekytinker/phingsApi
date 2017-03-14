@@ -14,14 +14,14 @@ var runSequence = require('run-sequence');
 var testFiles = 'test/**/*.js';
 var srcFiles = 'src/**/*.js';
 
-gulp.task('copyswaggertosrc', ()=> {
+gulp.task('copyswaggertosrc', () => {
   gulp.src('api/swagger/*')
   .pipe(gulp.dest('src/api/swagger/'));
 });
 
 gulp.task('transpileSource', ['copyswaggertosrc'], () => {
   gulp.src(srcFiles)
-    .pipe(plumber(function (error){
+    .pipe(plumber(function (error) {
       console.log('Error transpiling', error.message)
       this.emit('end');
     }))
@@ -40,8 +40,8 @@ gulp.task('runtests', () => {
 
 gulp.task('runtestshandleerror', () => {
   return gulp.src([testFiles])
-    .pipe(plumber(function (error){
-      console.log('Error running tests', error.message)
+    .pipe(plumber(function (error) {
+      console.log('Error running tests', error.message);
       this.emit('end');
     }))
     .pipe(mocha());

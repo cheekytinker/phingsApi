@@ -41,7 +41,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
               status: function status() {},
               json: function json() {}
             };
-            controller.createToken(req, res).then(function () {
+            controller.createToken(req, res, function () {}).then(function () {
               serviceMock.verify();
               done();
             });
@@ -62,7 +62,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             };
             var resMock = _sinon2.default.mock(res);
             resMock.expects('status').once().withArgs(404);
-            controller.createToken(req, resMock.object).then(function () {}).catch(function () {
+            controller.createToken(req, resMock.object, function () {}).then(function () {}).catch(function () {
               resMock.verify();
               done();
             });
@@ -84,14 +84,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
               },
               json: function json() {}
             };
-            //const resMock = sinon.mock(res);
-            //resMock.expects('status').once().withArgs(201);
-            controller.createToken(req, res).then(function () {
+            controller.createToken(req, res, function () {}).then(function () {
               (0, _chai.expect)(retCode).to.equal(201);
               done();
             });
-
-            //resMock.verify();
           });
         });
       });

@@ -4,12 +4,19 @@ import { describe, it, after, before } from 'mocha';
 import { expect } from 'chai';
 import jwt from 'jsonwebtoken';
 import shortid from 'shortid';
-import server from '../../../../app';
-import User from '../../../../services/authentication/user';
-
+import crypto from 'crypto';
+import server from '../../../../../app';
+import User from '../../../../../services/authentication/user';
+import PasswordVerfiier from '../../../../../services/authentication/passwordVerifier';
 
 let user = null;
 const uniqueUserName = shortid.generate();
+const saltLength = 64;
+const salt = crypto
+  .randomBytes(Math.ceil(saltLength/2))
+  .toString('hex')
+  .slice(0, saltLength);
+const testPassword = 'test123';
 
 describe('acceptance', () => {
   describe('api', () => {
@@ -24,8 +31,8 @@ describe('acceptance', () => {
             user = new User();
             user.firstName = 'Anthony';
             user.userName = uniqueUserName;
-            user.passwordHash = 'e9af9689e7b408bf2d9e5540c8a0926889061061e28c0bdcc96e0f1a27fc9d19a426debb0a27c2057156326a911a3d05a2cff9e1cf6250768d15a0e23413e168';
-            user.passwordSalt = 'salt';
+            user.passwordHash = PasswordVerfiier.createHash(testPassword, salt);
+            user.passwordSalt = salt;
             user.save((err) => {
               if(err) {
                console.log(err);
@@ -92,7 +99,7 @@ describe('acceptance', () => {
                 .post('/authTokens')
                 .send({
                   userName: uniqueUserName,
-                  password: 'test123',
+                  password: testPassword,
                 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
@@ -107,7 +114,7 @@ describe('acceptance', () => {
                 .post('/authTokens')
                 .send({
                   userName: uniqueUserName,
-                  password: 'test123',
+                  password: testPassword,
                 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)

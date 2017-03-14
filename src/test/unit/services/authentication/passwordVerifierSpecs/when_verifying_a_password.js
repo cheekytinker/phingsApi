@@ -1,6 +1,13 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
+import crypto from 'crypto';
 import PasswordVerifier from '../../../../../services/authentication/passwordVerifier';
+
+const saltLength = 64;
+const salt = crypto
+  .randomBytes(Math.ceil(saltLength/2))
+  .toString('hex')
+  .slice(0, saltLength);
 
 describe('unit', () => {
   describe('authentication', () => {
@@ -19,7 +26,7 @@ describe('unit', () => {
         it('should fail if user\'s passwordHash not equal supplied hash of password using passwordSalt', (done) => {
           const password = 'test123';
           const passwordHash = 'fred';
-          const passwordSalt = 'salt';
+          const passwordSalt = salt;
           new PasswordVerifier()
             .verify(password, passwordHash, passwordSalt)
             .then(() => {
