@@ -9,7 +9,7 @@ describe('unit', () => {
       describe('when asked to create an account that already exists', () => {
         it('should return 403 Forbidden with message', () => {
           const accountQueries = {
-            exists: () => {},
+            exists: () => { return Promise.resolve(true); },
           };
           const accountQueriesMock = sinon.mock(accountQueries);
           const controller = new AccountController(accountQueriesMock.object);
@@ -18,7 +18,7 @@ describe('unit', () => {
             .expects('exists')
             .once()
             .withArgs('myaccount')
-            .returns(true)
+            .returns(Promise.resolve(true))
           const req = {
             body: {
               name: 'myaccount',

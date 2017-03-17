@@ -60,17 +60,25 @@ describe('integration', () => {
         });
       });
       it('should allow users to be found', (done) => {
-        User.find({}, (err, docs) => {
-          expect(docs).to.exist;
-          done();
-        });
+        User.find({ userName: 'myUserName' })
+          .exec()
+          .then((docs) => {
+            expect(docs[0]).to.exist;
+            done();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
       it('should allow find by userName', (done) => {
-        const {userName, password} = testUser;
-        User.find({userName}, (err, foundUser) => {
-          expect(foundUser).to.exist;
-          done();
-        });
+        const { userName } = testUser;
+        User
+          .find({ userName })
+          .exec()
+          .then((foundUser) => {
+            expect(foundUser).to.exist;
+            done();
+          });
       });
     });
   });

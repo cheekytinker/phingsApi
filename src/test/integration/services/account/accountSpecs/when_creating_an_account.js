@@ -1,6 +1,8 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Account from '../../../../../services/account/account';
+import '../../../../../initialiseExternalServices';
+
 
 describe('integration', () => {
   describe('account', () => {

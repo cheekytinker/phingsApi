@@ -7,12 +7,18 @@ var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var mocha = require('gulp-mocha');
+var clean = require('gulp-clean');
 var istanbul = require('gulp-istanbul');
 var isparta = require('isparta');
 var runSequence = require('run-sequence');
 
 var testFiles = 'test/**/*.js';
 var srcFiles = 'src/**/*.js';
+
+/*gulp.task('cleanfiles', () => {
+  gulp.src(testFiles, { read: false })
+    .pipe(clean());
+});*/
 
 gulp.task('copyswaggertosrc', () => {
   gulp.src('api/swagger/*')

@@ -17,8 +17,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     (0, _mocha.describe)('helpers', function () {
       (0, _mocha.describe)('container', function () {
         (0, _mocha.describe)('when resolving the controller dependencies', function () {
-          (0, _mocha.it)('should resolve container and dependencies', function () {
+          (0, _mocha.it)('should resolve authenticateController and dependencies', function () {
             var controller = _container.Container.get(_config.TYPES.AuthenticateController);
+            _should2.default.exist(controller);
+          });
+          (0, _mocha.it)('should resolve accountController and dependencies', function () {
+            var controller = _container.Container.get(_config.TYPES.AccountController);
             _should2.default.exist(controller);
           });
         });

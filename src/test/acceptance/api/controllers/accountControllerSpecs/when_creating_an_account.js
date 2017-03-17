@@ -2,7 +2,9 @@ import should from 'should';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import request from 'supertest';
+import shortid from 'shortid';
 import server from '../../../../../app';
+
 
 describe('acceptance', () => {
   describe('account', () => {
@@ -76,29 +78,8 @@ describe('acceptance', () => {
             .expect(400)
             .end((err, res) => {
               should.not.exist(err);
-              const { results: { errors: [{ message: theMessage }] } } = res.body;
+              const {results: {errors: [{message: theMessage}]}} = res.body;
               theMessage.should.match(/.*Missing required property: email.*/);
-              done();
-            });
-        });
-        it('should return most specific uri in Location header if successful');
-        it('should return most specific uri in response body if successful');
-        it('should return 201 if successful', (done) => {
-          request(server)
-            .post('/accounts')
-            .send({
-              name: 'myaccount',
-              primaryContact: {
-                userName: 'theUserName',
-                password: 'pass123',
-                email: 'phings@cheekytinker.com',
-              },
-            })
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(201)
-            .end((err, res) => {
-              should.not.exist(err);
               done();
             });
         });

@@ -10,6 +10,8 @@ if (mongoose.models.Account != null && mongoose.modelSchemas.Account != null) {
       type: String,
       validate: [v => v.length > 1, 'Not valid'],
       required: true,
+      unique: true,
+      index: true,
     },
     primaryContact: {
       type: Schema.ObjectId,
