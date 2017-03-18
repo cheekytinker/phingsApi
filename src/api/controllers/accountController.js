@@ -16,7 +16,6 @@ export default class AccountController {
           next();
           return;
         }
-        console.log(`THIS iS ${this.commandInvoker}`);
         this.commandInvoker
           .execute(
             new CreateAccountCommand(req.body.name, {

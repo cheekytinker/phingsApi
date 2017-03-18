@@ -1,15 +1,28 @@
+import restify from 'restify';
+import SwaggerRestify from 'swagger-restify-mw';
 import './initialiseExternalServices';
+import log from './logging';
 import AppStatusNotifier from './appStatusNotifier';
 import EntityInitialiser from './services/authentication/entityInitialiser';
 
-
-console.log('App1 called');
+log.info('App called');
 EntityInitialiser.initialise();
-console.log('after init');
+log.info('after init');
 
-const SwaggerRestify = require('swagger-restify-mw');
-const restify = require('restify');
-const app = restify.createServer();
+const app = restify.createServer({
+  name: 'phings-api',
+  version: '0.1.0',
+});
+
+app.use((req, res, next) => {
+  const auditor = restify.auditLogger({
+    log,
+  });
+  auditor(req, res);
+  next();
+});
+app.use(restify.gzipResponse());
+
 
 module.exports = app; // for testing
 
@@ -18,12 +31,18 @@ const config = {
 };
 
 SwaggerRestify.create(config, (err, swaggerRestify) => {
-  if (err) { throw err; }
-
+  if (err) {
+    throw err;
+  }
+  /*app.on('after', (req, res, route, error) => {
+    const auditor = restify.auditLogger({
+      log,
+    });
+    auditor(req, res, route, error);
+  });*/
   swaggerRestify.register(app);
 
   const port = process.env.PORT || 10010;
-
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
