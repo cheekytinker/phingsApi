@@ -14,14 +14,8 @@ const app = restify.createServer({
   version: '0.1.0',
 });
 
-app.use((req, res, next) => {
-  const auditor = restify.auditLogger({
-    log,
-  });
-  auditor(req, res);
-  next();
-});
-app.use(restify.gzipResponse());
+
+
 
 
 module.exports = app; // for testing
@@ -40,8 +34,24 @@ SwaggerRestify.create(config, (err, swaggerRestify) => {
     });
     auditor(req, res, route, error);
   });*/
-  swaggerRestify.register(app);
 
+
+  swaggerRestify.register(app);
+  /*app.use(restify.gzipResponse());
+  app.use((req, res, next) => {
+    const auditor = restify.auditLogger({
+      log,
+      body: true,
+    });
+    auditor(req, res);
+    next();
+  });
+  app.on('after', (req, res, route, error) => {
+    const auditor = restify.auditLogger({
+      log,
+    });
+    auditor(req, res, route, error);
+  });*/
   const port = process.env.PORT || 10010;
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
