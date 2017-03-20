@@ -3,7 +3,7 @@
 # values in the swagger hash are system configuration for swagger-node
 swagger:
 
-  fittingsDirs: [ fittings ]
+  fittingsDirs: [ api/fittings ]
   defaultPipe: null
   swaggerControllerPipe: swagger_controllers  # defines the standard processing pipe for controllers
 
@@ -30,6 +30,8 @@ swagger:
       - _swagger_validate
       - express_compatibility
       - _router
+      - phings_request_audit
+      #- phings_gzip
 
     # pipe to serve swagger (endpoint is in swagger.yaml)
     swagger_raw:

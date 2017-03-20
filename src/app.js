@@ -14,15 +14,13 @@ const app = restify.createServer({
   version: '0.1.0',
 });
 
-
-
-
-
 module.exports = app; // for testing
 
 const config = {
   appRoot: __dirname,
 };
+
+
 
 SwaggerRestify.create(config, (err, swaggerRestify) => {
   if (err) {
