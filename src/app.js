@@ -4,6 +4,7 @@ import './initialiseExternalServices';
 import log from './logging';
 import AppStatusNotifier from './appStatusNotifier';
 import EntityInitialiser from './services/authentication/entityInitialiser';
+import gzipResponse from './api/middleware/gzipResponse';
 
 log.info('App called');
 EntityInitialiser.initialise();
@@ -19,37 +20,15 @@ module.exports = app; // for testing
 const config = {
   appRoot: __dirname,
 };
-
-
-
 SwaggerRestify.create(config, (err, swaggerRestify) => {
   if (err) {
     throw err;
   }
-  /*app.on('after', (req, res, route, error) => {
-    const auditor = restify.auditLogger({
-      log,
-    });
-    auditor(req, res, route, error);
-  });*/
-
-
+  //gzip here runs even when there is an error but causes 400 error to turn into 500
+  //app.use(gzipResponse());
   swaggerRestify.register(app);
-  /*app.use(restify.gzipResponse());
-  app.use((req, res, next) => {
-    const auditor = restify.auditLogger({
-      log,
-      body: true,
-    });
-    auditor(req, res);
-    next();
-  });
-  app.on('after', (req, res, route, error) => {
-    const auditor = restify.auditLogger({
-      log,
-    });
-    auditor(req, res, route, error);
-  });*/
+  //gzip here does not get called
+
   const port = process.env.PORT || 10010;
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
