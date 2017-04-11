@@ -50,6 +50,8 @@ describe('acceptance', () => {
             .send({
               name: 'myaccount',
               primaryContact: {
+                firstName: 'anthony',
+                lastName: 'hollingsworth',
                 userName: 'theUserName',
               },
             })
@@ -69,6 +71,8 @@ describe('acceptance', () => {
             .send({
               name: 'myaccount',
               primaryContact: {
+                firstName: 'anthony',
+                lastName: 'hollingsworth',
                 userName: 'theUserName',
                 password: 'pass123',
               },
@@ -80,6 +84,50 @@ describe('acceptance', () => {
               should.not.exist(err);
               const {results: {errors: [{message: theMessage}]}} = res.body;
               theMessage.should.match(/.*Missing required property: email.*/);
+              done();
+            });
+        });
+        it('should require an account primary contact firstName', (done) => {
+          request(server)
+            .post('/accounts')
+            .send({
+              name: 'myaccount',
+              primaryContact: {
+                lastName: 'hollingsworth',
+                userName: 'theUserName',
+                password: 'pass123',
+                email: 'phings@cheekytinker.com'
+              },
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end((err, res) => {
+              should.not.exist(err);
+              const {results: {errors: [{message: theMessage}]}} = res.body;
+              theMessage.should.match(/.*Missing required property: firstName.*/);
+              done();
+            });
+        });
+        it('should require an account primary contact lastName', (done) => {
+          request(server)
+            .post('/accounts')
+            .send({
+              name: 'myaccount',
+              primaryContact: {
+                firstName: 'hollingsworth',
+                userName: 'theUserName',
+                password: 'pass123',
+                email: 'phings@cheekytinker.com'
+              },
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end((err, res) => {
+              should.not.exist(err);
+              const { results: { errors: [{message: theMessage}] } } = res.body;
+              theMessage.should.match(/.*Missing required property: lastName.*/);
               done();
             });
         });

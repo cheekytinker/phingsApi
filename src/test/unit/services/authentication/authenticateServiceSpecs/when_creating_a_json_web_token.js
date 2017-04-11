@@ -1,12 +1,12 @@
-import { describe, it, before } from 'mocha';
+import { describe, it, beforeEach } from 'mocha';
 import sinon from 'sinon';
 import crypto from 'crypto';
 import { expect } from 'chai';
 import jwt from 'jsonwebtoken';
 import AuthenticateService from '../../../../../services/authentication/authenticateService';
-import * as user from '../../../../../services/authentication/user';
+import * as account from '../../../../../services/account/account';
 
-let mockUserModel = null;
+let mockAccountModel = null;
 let mockPasswordVerifier = null;
 const saltLength = 64;
 const salt = crypto
@@ -30,38 +30,39 @@ const testTokenUser = {
 
 describe('authenticateservice', () => {
   describe('when-creating-a-json-web-token', () => {
-    before(() => {
-      mockUserModel = sinon.mock(user.default);
+    beforeEach(() => {
+      mockAccountModel = sinon.mock(account.default);
+      mockAccountModel.users = [testUser];
       mockPasswordVerifier = sinon.mock({
         verify: () => Promise.resolve(),
       });
     });
-    it('should ask user model to find by username', (done) => {
+    it('should ask account model to find by username', (done) => {
       const mockFind = {
-        exec: () => Promise.resolve([testUser]),
+        exec: () => Promise.resolve(mockAccountModel),
       };
-      mockUserModel.expects('find')
+      mockAccountModel.expects('findByUserName')
         .once()
-        .withArgs({ userName: 'anthony' })
+        .withArgs('anthony')
         .returns(mockFind);
       const service = new AuthenticateService(mockPasswordVerifier.object);
       service.createJwtForUser('anthony')
         .then(() => {
-          mockUserModel.verify();
-          mockUserModel.restore();
+          mockAccountModel.verify();
+          mockAccountModel.restore();
           done();
         })
         .catch((err) => {
-          mockUserModel.restore();
+          mockAccountModel.restore();
           done(err);
         });
     });
     it('should ask passwordVerifier to verify password', (done) => {
       const password = 'password';
       const stubFind = {
-        exec: () => Promise.resolve([testUser]),
+        exec: () => Promise.resolve(mockAccountModel),
       };
-      const stub = sinon.stub(user.default, 'find').returns(stubFind);
+      const stub = sinon.stub(account.default, 'findByUserName').returns(stubFind);
       mockPasswordVerifier.expects('verify')
         .once()
         .withArgs(
@@ -86,11 +87,11 @@ describe('authenticateservice', () => {
     });
     it('should return a Json Web Token', (done) => {
       const mockFind = {
-        exec: () => Promise.resolve([testUser]),
+        exec: () => Promise.resolve(mockAccountModel),
       };
-      const stub = sinon.stub(user.default, 'find').returns(mockFind);
+      const stub = sinon.stub(account.default, 'findByUserName').returns(mockFind);
       const service = new AuthenticateService(mockPasswordVerifier.object);
-      service.createJwtForUser('userName', 'password')
+      service.createJwtForUser('anthony', 'password')
         .then((token) => {
           stub.restore();
           jwt.verify(token, secret, (err, decoded) => {

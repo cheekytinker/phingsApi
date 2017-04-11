@@ -92,6 +92,8 @@ definitions:
       - email
       - userName
       - password
+      - firstName
+      - lastName
   CreateAccountResponse:
     properties:
       key:

@@ -12,7 +12,9 @@ describe('integration', () => {
         it('should create account in repository', (done) => {
           const accountName = shortid.generate();
           const primaryContact = {
-            userName: 'Anthony',
+            firstName: 'Anthony',
+            lastName: 'Hollingsworth',
+            userName: accountName,
             password: 'pass123',
             email: 'phing@cheekytinker.com',
           };

@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
-import User from './user';
+import Account from './../account/account';
 
 const secret = 'secret';
 const options = { expiresIn: 1440 };
 
-function createTokenFromUser(users, password, passwordVerifier) {
-  if (users.length !== 1) {
+function createTokenFromUser(user, password, passwordVerifier) {
+  if (!user) {
     return Promise.reject('user not found');
   }
-  const { userName, firstName, lastName, passwordHash, passwordSalt } = users[0];
+  const { userName, firstName, lastName, passwordHash, passwordSalt } = user;
   return passwordVerifier
     .verify(password, passwordHash, passwordSalt)
     .then(() => {
@@ -19,15 +19,21 @@ function createTokenFromUser(users, password, passwordVerifier) {
       );
       return Promise.resolve(token);
     });
-};
+}
 
 export default class AuthenticateService {
   constructor(passwordVerifier) {
     this.passwordVerifier = passwordVerifier;
   }
   createJwtForUser(userName, password) {
-    return User.find({ userName })
+    return Account.findByUserName(userName)
         .exec()
-        .then(users => createTokenFromUser(users, password, this.passwordVerifier));
+        .then((account) => {
+          if (!account) {
+            return Promise.reject('Account not found');
+          }
+          const user = account.users.find(foundUser => foundUser.userName === userName);
+          return createTokenFromUser(user, password, this.passwordVerifier);
+        });
   }
 }

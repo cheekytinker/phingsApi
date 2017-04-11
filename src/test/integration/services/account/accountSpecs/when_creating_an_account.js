@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import Account from '../../../../../services/account/account';
 import '../../../../../initialiseExternalServices';
 
-
 describe('integration', () => {
   describe('account', () => {
     describe('Account', () => {
@@ -20,7 +19,22 @@ describe('integration', () => {
           const account = new Account();
           account.name = 'myaccount';
           account.validate((err) => {
-            expect(err.errors.primaryContact.kind).to.equal('required');
+            expect(err.errors.users.message).to.equal('primary contact must be supplied');
+            done();
+          });
+        });
+        it('should allow an account to be validated', (done) => {
+          const account = new Account();
+          account.name = 'myaccount';
+          account.setPrimaryContact({
+            firstName: 'anthony',
+            lastName: 'hollingsworth',
+            email: 'test@cheekytinker.com',
+            userName: 'anthony',
+            password: 'anthony',
+          });
+          account.validate((err) => {
+            expect(err).not.to.exist;
             done();
           });
         });

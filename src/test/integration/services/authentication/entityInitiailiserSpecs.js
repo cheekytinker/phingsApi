@@ -1,23 +1,35 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import User from '../../../../services/authentication/user';
+import Account from '../../../../services/account/account';
 import EntityInitialiser from '../../../../services/authentication/entityInitialiser';
+import defaultEntities from '../../../../config/defaultEntities';
+import './../../../../initialiseExternalServices';
+
 
 describe('integration', () => {
   describe('services', () => {
     describe('authentication', () => {
-      it('should create master user if master user does not exist', (done) => {
-        User
-          .remove()
-          .then(() => EntityInitialiser.initialise())
-          .then(() => User.find({ userName: 'master' }).exec())
-          .then((user) => {
-            expect(user.length).to.equal(1);
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
+      describe('entityInitialiser', () => {
+        it('should create master user if master user does not exist', (done) => {
+          Account
+            .remove()
+            .then(() => {
+              EntityInitialiser
+                .initialise()
+                .then(() => {
+                  Account
+                    .findByUserName(defaultEntities.masterUser.userName)
+                    .exec()
+                    .then((masterAccount) => {
+                      if (!masterAccount) {
+                        done(`Cannot find master account by ${defaultEntities.masterUser.userName}`);
+                        return;
+                      }
+                      done();
+                    });
+                });
+            });
+        });
       });
     });
   });

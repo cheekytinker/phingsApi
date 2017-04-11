@@ -13,6 +13,8 @@ describe('integration', () => {
           const primaryContact = {
             userName: 'Anthony',
             password: 'pass123',
+            firstName: 'Anthony',
+            lastName: 'Hollingsworth',
             email: 'phing@cheekytinker.com',
           };
           const command = new CreateAccountCommand(accountName, primaryContact);
@@ -20,12 +22,12 @@ describe('integration', () => {
           command
             .execute()
             .then(() => {
-              command2
-                .execute()
-                .catch((err) => {
-                  expect(`${err}`).to.contain('duplicate key error');
-                  done();
-                });
+              return command2
+                .execute();
+            })
+            .catch((err) => {
+              expect(`${err}`).to.contain('duplicate key error');
+              done();
             });
         });
       });

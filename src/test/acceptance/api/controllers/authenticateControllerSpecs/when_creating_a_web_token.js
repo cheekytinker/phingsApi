@@ -6,16 +6,11 @@ import jwt from 'jsonwebtoken';
 import shortid from 'shortid';
 import crypto from 'crypto';
 import server from '../../../../../app';
-import User from '../../../../../services/authentication/user';
+import Account from '../../../../../services/account/account';
 import PasswordVerfiier from '../../../../../services/authentication/passwordVerifier';
 
-let user = null;
+let account = null;
 const uniqueUserName = shortid.generate();
-const saltLength = 64;
-const salt = crypto
-  .randomBytes(Math.ceil(saltLength/2))
-  .toString('hex')
-  .slice(0, saltLength);
 const testPassword = 'test123';
 
 describe('acceptance', () => {
@@ -28,20 +23,24 @@ describe('acceptance', () => {
       describe('authenticate', () => {
         describe('POST /authTokens', () => {
           before('create test users', (done) => {
-            user = new User();
+            account = new Account();
+            account.name = uniqueUserName;
+            const user = {};
             user.firstName = 'Anthony';
+            user.lastName = 'Hollingsworth';
             user.userName = uniqueUserName;
-            user.passwordHash = PasswordVerfiier.createHash(testPassword, salt);
-            user.passwordSalt = salt;
-            user.save((err) => {
-              if(err) {
-               console.log(err);
+            user.password = testPassword;
+            user.email = 'phing@cheekytinker.com';
+            account.setPrimaryContact(user);
+            account.save((err) => {
+              if (err) {
+                console.log(err);
               }
               done();
             });
           });
           after('Remove test users', (done) => {
-            User.findOneAndRemove(user, () => {
+            Account.findOneAndRemove(account, () => {
               done();
             });
           });

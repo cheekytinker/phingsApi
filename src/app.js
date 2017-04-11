@@ -4,7 +4,6 @@ import './initialiseExternalServices';
 import log from './logging';
 import AppStatusNotifier from './appStatusNotifier';
 import EntityInitialiser from './services/authentication/entityInitialiser';
-import gzipResponse from './api/middleware/gzipResponse';
 
 log.info('App called');
 EntityInitialiser.initialise();

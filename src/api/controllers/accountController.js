@@ -20,6 +20,8 @@ export default class AccountController {
           .execute(
             new CreateAccountCommand(req.body.name, {
               userName: req.body.primaryContact.userName,
+              firstName: req.body.primaryContact.firstName,
+              lastName: req.body.primaryContact.lastName,
               password: req.body.primaryContact.password,
               email: req.body.primaryContact.email,
             }))
