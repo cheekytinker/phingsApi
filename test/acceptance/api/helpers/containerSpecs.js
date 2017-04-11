@@ -6,9 +6,9 @@ var _should = require('should');
 
 var _should2 = _interopRequireDefault(_should);
 
-var _container = require('../../../../api/helpers/container');
+var _container = require('./../../../../api/helpers/container');
 
-var _config = require('../../../../api/helpers/config');
+var _config = require('./../../../../api/helpers/config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
