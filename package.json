@@ -8,6 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "bunyan": "^1.8.8",
     "connect": "^3.6.0",
     "cqrs-domain": "^2.5.7",

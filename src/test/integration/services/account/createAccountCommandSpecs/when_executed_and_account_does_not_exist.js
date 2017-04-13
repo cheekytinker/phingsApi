@@ -32,6 +32,7 @@ describe('integration', () => {
               done(err);
             });
         });
+        it('should send account created message');
       });
     });
   });

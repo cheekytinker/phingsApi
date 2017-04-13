@@ -54,6 +54,7 @@ describe('acceptance', () => {
               done();
             });
         });
+        it('should send a verfication email to the primary contact email address');
       });
     });
   });

@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Account from '../../../../../services/account/account';
+import Account, { ACCOUNT_STATUS } from '../../../../../services/account/account';
 import '../../../../../initialiseExternalServices';
 
 describe('integration', () => {
@@ -37,6 +37,10 @@ describe('integration', () => {
             expect(err).not.to.exist;
             done();
           });
+        });
+        it('should set account status to Created', () => {
+          const account = new Account();
+          expect(account.status).to.equal(ACCOUNT_STATUS.Created);
         });
       });
     });

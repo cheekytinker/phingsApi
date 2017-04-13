@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 
 let model = null;
 
+export const ACCOUNT_STATUS = {
+  Created: 'Created',
+  Verified: 'Verified',
+};
+
 function createSalt() {
   const saltLength = 128;
   const salt = crypto
@@ -73,6 +78,12 @@ if (
       unique: true,
       index: true,
     },
+    status: {
+      type: String,
+      enum: Array.from(Object.keys(ACCOUNT_STATUS)),
+      required: true,
+      default: ACCOUNT_STATUS.Created,
+    },
     users: {
       type: [UserSchema],
       validate: { validator: validateUsers, msg: 'primary contact must be supplied' },
@@ -116,3 +127,4 @@ if (
 }
 
 export default model;
+
